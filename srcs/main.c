@@ -14,13 +14,22 @@
 
 int	main(int argc, char **argv)
 {
+	RenderContext_t *ctx;
+
+	ctx = initRenderContext();
+	while (1)
+	{
+		SDLX_RenderReset(ctx->display);
+		SDLX_InputUpdate();
+		SDLX_InputLoop();
+		SDL_RenderPresent(ctx->display->renderer);
+	}
 	// char	**map;
 	// int		len;
-
 	// len = 0;
 	// if (argc != 2)
 	// 	exit(write_error(2));
 	// map = error_loop(argv[1], &len);
-	parse_file(map, len);
+	// parse_file(map, len);
 	exit(0);
 }
