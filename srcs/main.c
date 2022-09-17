@@ -22,6 +22,7 @@ int	main(int argc, char **argv)
 		SDLX_RenderReset(ctx->display);
 		SDLX_InputUpdate();
 		SDLX_InputLoop();
+		DrawMesh(ctx);
 		SDL_RenderPresent(ctx->display->renderer);
 	}
 	// char	**map;

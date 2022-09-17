@@ -16,5 +16,5 @@
 # include "renderer_structs.h"
 
 RenderContext_t *initRenderContext(void);
-
+void DrawMesh(RenderContext_t *ctx);
 #endif
