@@ -16,5 +16,16 @@
 # include "renderer_structs.h"
 
 RenderContext_t *initRenderContext(void);
-void DrawMesh(RenderContext_t *ctx);
+void	DrawMesh(RenderContext_t *ctx);
+void	TransformMesh(Mesh_t *mesh);
+void	HandleInput(RenderContext_t *ctx);
+int		count (char *str, char c);
+char	*OpenFile(char *filename, long *filesize);
+void	MapToMesh(Mesh_t *dest, char *filename);
+
+
+void printCoord3D(Vector3_t coord);
+void printCoord3DF(Vector3F_t coord);
+void printCoord2D(Vector2_t coord);
+
 #endif

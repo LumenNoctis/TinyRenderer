@@ -1,7 +1,11 @@
 {
     "files.associations": {
-        "renderstructs.h": "c",
-        "sdlx.h": "c",
-        "sdl_image.h": "c"
-    }
+		"*.h": "c",
+		"renderstructs.h": "c",
+		"sdlx.h": "c",
+		"sdl_image.h": "c",
+		"array": "c",
+		"string": "c",
+		"string_view": "c"
+	}
 }

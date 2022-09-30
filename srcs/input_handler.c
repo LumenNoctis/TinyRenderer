@@ -11,73 +11,28 @@
 /* ************************************************************************** */
 
 #include "renderer.h"
-// #include "../incl/keys.h"
-// #include "../incl/colors.h"
 
-// void	data_init(t_data **data, int size, int len)
-// {
-// 	(*data)->scale = 16;
-// 	(*data)->size = size;
-// 	(*data)->len = len;
-// 	(*data)->mode = 0;
-// 	(*data)->i = 0;
-// 	(*data)->a_x = 50;
-// 	(*data)->a_z = 45;
-// 	if ((((size / len) + (size / len) / 2) * 10) < 500)
-// 		(*data)->win_h = 500;
-// 	else if (((size / len) + (size / len) / 2) * 10 > 1000)
-// 		(*data)->win_h = 1000;
-// 	else
-// 		(*data)->win_h = ((size / len) + (size / len) / 2) * 10;
-// 	if ((len + len / 2) * 16 < 500)
-// 		(*data)->win_len = 500;
-// 	else if ((len + len / 2) * 16 > 1000)
-// 		(*data)->win_len = 1000;
-// 	else
-// 		(*data)->win_len = (len + len / 2) * 16;
-// }
+void HandleInput(RenderContext_t *ctx)
+{
+	SDLX_Input input;
 
-// int		on_key(int key, t_data **data)
-// {
-// 	if (key == K_ESC)
-// 	{
-// 		mlx_destroy_window((*data)->ptr, (*data)->window);
-// 		free_n_exit(*data);
-// 	}
-// 	else if (key == K_RETURN)
-// 	{
-// 		(*data)->mode = ((*data)->mode == 0) ? 1 : 0;
-// 		mlx_clear_window((*data)->ptr, (*data)->window);
-// 		window_init(*data);
-// 	}
-// 	else if (key == K_SPACE)
-// 	{
-// 		create_file(*data);
-// 	}
-// 	else
-// 		(mode_func(data, key));
-// 	return (1);
-// }
+	input = SDLX_InputGet();
 
-// int		on_mouse(int key, int x, int y, t_data **data)
-// {
-// 		scale(data, 1);
-// 		scale(data, 1);
-// 	return (1);
-// }
+	// ctx->mesh.rotation.y = 80;
+	// (input.mouse_buttons[SDL_BUTTON_MIDDLE]);
+	ctx->mesh.rotation.y -= (input.keyboard[KEY_LEFT] & 1) * 0.05;
+	ctx->mesh.rotation.y += (input.keyboard[KEY_RIGHT] & 1) * 0.05;
+	ctx->mesh.rotation.x += (input.keyboard[KEY_UP] & 1) * 0.05;
+	ctx->mesh.rotation.x -= (input.keyboard[KEY_DOWN] & 1) * 0.05;
 
-// int		mlx_prgr(t_coordinates **coords, int size, int len)
-// {
-// 	t_data *data;
 
-// 	data = malloc(sizeof(t_data));
-// 	data_init(&data, size, len);
-// 	data->coords = &coords;
-// 	data->ptr = mlx_init();
-// 	data->window = mlx_new_window(data->ptr, data->win_len, data->win_h, "fdf");
-// 	mlx_key_hook(data->window, on_key, &data);
-// 	mlx_mouse_hook(data->window, on_mouse, &data);
-// 	window_init(data);
-// 	mlx_loop(data->ptr);
-// 	return (0);
-// }
+	ctx->mesh.scale -= (input.keyboard[KEY_DR] & 1) * 0.01;
+	ctx->mesh.scale += (input.keyboard[KEY_DL] & 1) * 0.01;
+
+	SDL_Log("Rot: %f %f", ctx->mesh.rotation.x, ctx->mesh.rotation.y );
+	if (input.keyboard[KEY_ZOOM])
+	{
+		ctx->mesh.rotation.y = 0;
+		ctx->mesh.rotation.x = 0;
+	}
+}

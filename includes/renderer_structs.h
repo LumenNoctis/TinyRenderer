@@ -13,6 +13,8 @@ enum {
 	KEY_LEFT,
 	KEY_RIGHT,
 	KEY_UP,
+	KEY_DL,
+	KEY_DR,
 	KEY_DOWN,
 	KEY_ZOOM,
 	KEY_MODE
@@ -24,6 +26,12 @@ typedef struct Vector2
 	int y;
 }				Vector2_t;
 
+typedef struct Vector2F
+{
+	double x;
+	double y;
+}				Vector2F_t;
+
 typedef struct Vector3
 {
 	int x;
@@ -31,9 +39,17 @@ typedef struct Vector3
 	int z;
 }				Vector3_t;
 
+typedef struct Vector3F
+{
+	double x;
+	double y;
+	double z;
+}				Vector3F_t;
+
 typedef struct		s_vertex
 {
 	Vector3_t		coordinates;
+	Vector2F_t		screenCoord;
 	uint32_t		color;
 }					Vertex_t;
 
@@ -49,7 +65,9 @@ typedef struct		s_mesh
 	int				vertexCount;
 	int				edgesCount;
 
-	Vector3_t		rotation;
+	double			scale;
+
+	Vector3F_t		rotation;
 	Vector3_t		*center;
 	Vector3_t		_center;
 	Vertex_t		*vertices;

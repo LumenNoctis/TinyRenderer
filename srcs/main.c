@@ -17,20 +17,19 @@ int	main(int argc, char **argv)
 	RenderContext_t *ctx;
 
 	ctx = initRenderContext();
+	MapToMesh(&ctx->mesh, "maps/42.fdf");
+	SDL_Log("Init");
+	ctx->mesh.scale = 5;
 	while (1)
 	{
 		SDLX_RenderReset(ctx->display);
 		SDLX_InputUpdate();
 		SDLX_InputLoop();
+		HandleInput(ctx);
+		TransformMesh(&(ctx->mesh));
 		DrawMesh(ctx);
 		SDL_RenderPresent(ctx->display->renderer);
 	}
-	// char	**map;
-	// int		len;
-	// len = 0;
-	// if (argc != 2)
-	// 	exit(write_error(2));
-	// map = error_loop(argv[1], &len);
-	// parse_file(map, len);
+;
 	exit(0);
 }

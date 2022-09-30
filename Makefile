@@ -1,11 +1,11 @@
 NAME = test
 
-DEBUG_FLAGS = -fsanitize=address
+DEBUG_FLAGS = -fsanitize=address -g
 FLAGS = $(DEBUG_FLAGS)
 INCLUDES = -I includes/ -I includes/SDL2/ -I includes/SDLX/ -I includes/MT/
 
 LIB_DIR = libs/
-STATIC_LIB = -l SDL2 -l SDL2_image -l SDL2_ttf -lm
+STATIC_LIB = -l SDL2 -l SDL2_image -l SDL2_ttf -lm -L $(LIB_DIR)libMT.a
 
 SDLX_DIR = SDLX/
 SRCS_DIR = srcs/
@@ -25,6 +25,9 @@ SRCS_NAMES =								\
 	init				\
 	input_handler		\
 	main 				\
+	parser				\
+	projection			\
+	utils				\
 
 SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS_NAMES)))
 OBJS = $(addprefix $(BIN_DIR), $(SRCS:.c=.o))

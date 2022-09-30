@@ -13,62 +13,148 @@
 #include "renderer.h"
 #include <math.h>
 
-// static void		rotate_x(t_coordinates *pt, float angle, float (*coord_2d)[])
-// {
-// 	angle = (angle) * (M_PI / 180);
-// 	(*coord_2d)[1] = cos(angle) * (pt->n_y);
-// }
+# define X px
+# define Y py
+# define Z pz
 
-// static void		rotate_y(t_coordinates *pt, float angle, float (*coord_2d)[])
-// {
-// 	angle = (angle) * (M_PI / 180);
-// 	(*coord_2d)[0] = cos(angle) * (pt->n_x);
-// }
+double		ToRad(double angle)
+{
+	double result;
 
-// static void		rotate_z(t_coordinates *pt, float angle, float (*coord_2d)[])
-// {
-// 	angle = (angle) * (M_PI / 180);
-// 	(*coord_2d)[0] = cos(angle) * pt->x - sin(angle) * pt->y;
-// 	(*coord_2d)[1] = sin(angle) * pt->x + cos(angle) * pt->y;
-// }
+	result = angle * M_PI;
+	result /= 180;
 
-// void			window_init(t_data *data)
-// {
-// 	int		i;
-// 	float	c2d[2];
-// 	char	*str;
+	return result;
+}
 
-// 	i = 0;
-// 	str = ((data->mode == 0) ? "--\n| View |--" : "--\n| Edit |\n--");
-// 	mlx_string_put(data->ptr, data->window, (data->win_len / 1.5),
-// 			data->win_h / 10, ORANGE, str);
-// 	if (data->mode == 1)
-// 		mlx_string_put(data->ptr, data->window, (data->win_len / 1.8),
-// 				(data->win_h / 10) + 30, GREEN, "Press Space to save");
-// 	while (i < data->size)
-// 	{
-// 		rotate_z((*data->coords)[i], data->a_z, &c2d);
-// 		(*data->coords)[i]->n_x = c2d[0];
-// 		(*data->coords)[i]->n_y = c2d[1];
-// 		rotate_x((*data->coords)[i], data->a_x, &c2d);
-// 		rotate_y((*data->coords)[i], 30, &c2d);
-// 		(*data->coords)[i]->n_x = data->win_len / 2 - (c2d[0] * data->scale);
-// 		(*data->coords)[i]->n_y = data->win_h / 2 - (c2d[1] * data->scale)
-// 		- ((*data->coords)[i]->z * data->scale / 16);
-// 		i++;
-// 	}
-// 	make_image(data, 0);
-// 	ft_memset(c2d, 0, 2);
-// }
+Vector3F_t		RotateVertex(Vector3F_t vertex, Vector3_t center, Vector3F_t rotation)
+{
+	Vector3F_t result;
+	int px;
+	int py;
+	int pz;
+	float rx;
+	float ry;
+	float rz;
 
-// void			scale(t_data **data, int ud)
-// {
-// 	if (ud == 0)
-// 		(*data)->scale += 1;
-// 	else
-// 		(*data)->scale -= 1;
-// 	mlx_clear_window((*data)->ptr, (*data)->window);
-// 	window_init(*data);
-// }
+	static int z_scale;
+	static int z_inc = 0.1;
+	Vector3F_t axisx = {-250,0,0};
+	Vector3F_t axisy = {0,-250,0};
+	Vector3F_t axisz = {0,0,250};
+	Vector3F_t raxisx;
+	Vector3F_t raxisy;
+	Vector3F_t raxisz;
+
+	Vector3F_t taxisx;
+	Vector3F_t taxisy;
+	Vector3F_t taxisz;
 
 
+	raxisx = axisx;
+	raxisy = axisy;
+	raxisz = axisz;
+
+	taxisx = axisx;
+	taxisy = axisy;
+	taxisz = axisz;
+
+	px = vertex.x - center.x;
+	py = vertex.y - center.y;
+	pz = vertex.z - center.z;
+
+	rx = ToRad(rotation.x);
+	ry = ToRad(rotation.y);
+	rz = ToRad(rotation.z);
+
+	result.x = vertex.x;
+	result.y = vertex.y;
+	result.z = vertex.z * 0.1;
+
+	result.y = (cos(rx) * result.y) - (sin(rx) * result.z);
+	result.z = (sin(rx) * vertex.y) + (cos(rx) * result.z);
+	result.x = (cos(ry) * result.x) + (sin(ry) * result.z);
+
+
+	// result.x = (cos(rx) * (vertex.x)) - (sin(rx) * (vertex.y));
+	// result.y = (sin(rx) * (vertex.x)) + (cos(rx) * (vertex.y));
+	// result.z = 1;
+
+	// axisx.y = (cos(rx) * axisx.y) - (sin(rx) * axisx.z);
+	// axisx.z = (sin(rx) * raxisx.y) + (cos(rx) * axisx.z);
+	// axisx.x = (cos(ry) * axisx.x) + (sin(ry) * axisx.z);
+
+	// axisy.y = (cos(rx) * axisy.y) - (sin(rx) * axisy.z);
+	// axisy.z = (sin(rx) * raxisy.y) + (cos(rx) * axisy.z);
+	// axisy.x = (cos(ry) * axisy.x) + (sin(ry) * axisy.z);
+
+	// axisz.y = (cos(rx) * axisz.y) - (sin(rx) * axisz.z);
+	// axisz.z = (sin(rx) * raxisz.y) + (cos(rx) * axisz.z);
+	// axisz.x = (cos(ry) * axisz.x) + (sin(ry) * axisx.z);
+
+
+
+
+	SDLX_Display *display;
+
+	display= SDLX_DisplayGet();
+
+	// SDL_SetRenderDrawColor(display->renderer, 0xFF, 0x00, 0x00, 0xFF);
+	// SDL_RenderDrawLine(display->renderer, 250, 250, (display->win_w / 2) - axisx.x, (display->win_w / 2) - axisx.y );
+	// SDL_SetRenderDrawColor(display->renderer, 0x00, 0xFF, 0x00, 0xFF);
+	// SDL_RenderDrawLine(display->renderer, 250, 250, (display->win_w / 2) - axisy.x, (display->win_w / 2) - axisy.y);
+	// SDL_SetRenderDrawColor(display->renderer, 0x00, 0x00, 0xFF, 0xFF);
+	// SDL_RenderDrawLine(display->renderer, 250, 250, (display->win_w / 2) - axisz.x, (display->win_w / 2) - axisz.y);
+
+	// SDL_Log("y %f z %f mult %f %f",raxisx.y , taxisx.z, raxisx.y * taxisx.z,  (display->win_w / 2) - (raxisx.y * taxisx.z));
+	// SDL_SetRenderDrawColor(display->renderer, 0xFF, 0xFF, 0x00, 0xFF);
+	// SDL_RenderDrawLine(display->renderer, 250, 250, (display->win_w / 2) - raxisx.x, (display->win_w / 2) - (raxisx.y * taxisx.z) );
+	// SDL_SetRenderDrawColor(display->renderer, 0x00, 0xFF, 0xFF, 0xFF);
+	// SDL_RenderDrawLine(display->renderer, 250, 250, (display->win_w / 2) - raxisy.x, (display->win_w / 2) - (raxisy.y * taxisy.z ));
+	// SDL_SetRenderDrawColor(display->renderer, 0xFF, 0x00, 0xFF, 0xFF);
+	// SDL_RenderDrawLine(display->renderer, 250, 250, (display->win_w / 2) - raxisz.x, (display->win_w / 2) - (raxisz.y * taxisz.z ));
+
+	return  result;
+}
+
+Vector2F_t CoordToScreen(Vector3F_t in, float scale)
+{
+	SDLX_Display *display;
+	Vector2F_t out;
+
+	display = SDLX_DisplayGet();
+	out.x = in.x + (display->win_w / 2);
+	out.y = in.y + (display->win_h / 2);
+
+	return out;
+}
+
+Vector3F_t		ScaleVertex(Vector3_t vertex, float scale)
+{
+	Vector3F_t result;
+
+	result.x = (float)(vertex.x) * scale;
+	result.y = (float)(vertex.y) * scale;
+	result.z = (float)(vertex.z) * scale;
+
+	return result;
+}
+
+Vector3_t		TranslateVertex(Vector3_t vertex, Vector3_t center, Vector3_t translation)
+{
+
+}
+
+void		TransformMesh(Mesh_t *mesh)
+{
+	int i;
+	Vector3F_t	coordinates;
+
+	i = 0;
+	for (i; i < mesh->vertexCount; i++)
+	{
+		coordinates = ScaleVertex(mesh->vertices[i].coordinates, mesh->scale);
+		coordinates = RotateVertex(coordinates, *(mesh->center), mesh->rotation);
+		mesh->vertices[i].screenCoord = CoordToScreen(coordinates, mesh->scale);
+	}
+}
