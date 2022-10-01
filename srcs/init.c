@@ -31,7 +31,7 @@ void initMesh(RenderContext_t *ctx)
 	ctx->mesh.edges[3].vertexB = &ctx->mesh.vertices[0];
 
 	ctx->mesh.center = &(ctx->mesh._center);
-	ctx->mesh._center = (Vector3_t){0, 0, 0};
+	ctx->mesh._center = (Vector3F_t){0, 0, 0};
 
 }
 
@@ -70,6 +70,7 @@ RenderContext_t *initRenderContext(void)
 		*((Uint32 *)(&(SDL_Color){.r = 000, .g = 000, .b = 000, .a = 255}))
 		);
 
+	// SDL_Log("Buff %p %p %p", ctx->pixels, ctx->z_buffer, ctx->surface);
 	SDLX_InputMap(SDLX_KEYBOARDTYPE, SDL_SCANCODE_LEFT, KEY_LEFT);
 	SDLX_InputMap(SDLX_KEYBOARDTYPE, SDL_SCANCODE_A, KEY_LEFT);
 

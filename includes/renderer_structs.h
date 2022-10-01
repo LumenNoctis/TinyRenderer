@@ -48,7 +48,7 @@ typedef struct Vector3F
 
 typedef struct		s_vertex
 {
-	Vector3_t		coordinates;
+	Vector3F_t		coordinates;
 	Vector2F_t		screenCoord;
 	uint32_t		color;
 }					Vertex_t;
@@ -68,8 +68,8 @@ typedef struct		s_mesh
 	double			scale;
 
 	Vector3F_t		rotation;
-	Vector3_t		*center;
-	Vector3_t		_center;
+	Vector3F_t		*center;
+	Vector3F_t		_center;
 	Vertex_t		*vertices;
 	Edge_t			*edges;
 }					Mesh_t;
@@ -79,6 +79,11 @@ typedef struct		s_camera
 	int				scale;
 	Vector3_t		position;
 }					Camera_t;
+
+typedef	struct		s_settings
+{
+	int				trace;
+}					Settings_t;
 
 typedef struct		s_renderContext
 {

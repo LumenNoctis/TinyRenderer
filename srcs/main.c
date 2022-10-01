@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 	// MapToMesh(&ctx->mesh, "maps/42.fdf");
 	ObjToMesh(&ctx->mesh, "assets/wireframe.obj");
 	SDL_Log("Init");
-	ctx->mesh.scale = 5;
+	ctx->mesh.scale = 50;
 	while (1)
 	{
 		SDLX_RenderReset(ctx->display);

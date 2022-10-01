@@ -21,8 +21,6 @@ void DrawVertices(char *pixels, char *z_buffer, Mesh_t mesh, SDLX_Display *displ
 	}
 }
 
-
-
 void DrawEdges(char *pixels, char *z_buffer, Mesh_t mesh, SDLX_Display *display)
 {
 	Vector2F_t screenCoordA;
@@ -47,9 +45,11 @@ void DrawMesh(RenderContext_t *ctx)
 	SDL_Surface *surf;
 	SDL_Texture	*texture;
 
+
+
 	memset(ctx->pixels, 0x000000, ctx->display->win_h * ctx->display->win_w * PIXEL_CHANNELS * 2);
 
-	DrawVertices(ctx->pixels, ctx->z_buffer, ctx->mesh, ctx->display);
+	DrawVertices(ctx->pixels, NULL, ctx->mesh, ctx->display);
 	DrawEdges(ctx->pixels, ctx->z_buffer, ctx->mesh, ctx->display);
 
 	texture = SDL_CreateTextureFromSurface(ctx->display->renderer, ctx->surface);
