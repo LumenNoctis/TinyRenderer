@@ -21,6 +21,8 @@ void DrawVertices(char *pixels, char *z_buffer, Mesh_t mesh, SDLX_Display *displ
 	}
 }
 
+
+
 void DrawEdges(char *pixels, char *z_buffer, Mesh_t mesh, SDLX_Display *display)
 {
 	Vector2F_t screenCoordA;

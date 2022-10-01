@@ -4,9 +4,10 @@ int		count (char *str, char c)
 {
 	int count = 0;
 
-	while (*str++)
+	while (*str)
 	{
-		count += (*str == c) ? 1 : 0;
+		count += *str == c;
+		str++;
 	}
 	return count;
 }

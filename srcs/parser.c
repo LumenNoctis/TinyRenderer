@@ -42,8 +42,6 @@ void MapToMesh(Mesh_t *dest, char *filename)
 	dest->vertices = calloc(dest->vertexCount, sizeof(Vertex_t));
 	dest->edges = calloc(dest->edgesCount, sizeof(Edge_t));
 
-	SDL_Log("Edges %d", dest->edgesCount);
-
 	y = 0;
 	while(data != NULL)
 	{
@@ -93,7 +91,29 @@ void MapToMesh(Mesh_t *dest, char *filename)
 void ObjToMesh(Mesh_t *dest, char *filename)
 {
 	long filesize;
+	int	 lineCount;
 	char *data;
+	char *tmp;
+
+	data = OpenFile(filename, &filesize);
+
+	data = strtok(data, "\n");
+
+	while(data && data[0] != 'o')
+	{
+		data = strtok(NULL, "\n");
+	}
+	data += strlen(data) + 1;
+	lineCount = 0;
+	dest->vertexCount = count(data, 'v');
+	dest->edgesCount = count(data, 'l');
+
+	SDL_Log("Vert %d, lines %d", dest->vertexCount, dest->edgesCount);
+	exit(0);
+	// while (data && data[0] == 'v')
+	// {
+	// 	data = strtok(NULL, "\n");
+	// }
 
 
 }

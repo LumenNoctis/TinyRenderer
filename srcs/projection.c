@@ -71,14 +71,19 @@ Vector3F_t		RotateVertex(Vector3F_t vertex, Vector3_t center, Vector3F_t rotatio
 	result.y = vertex.y;
 	result.z = vertex.z * 0.1;
 
-	result.y = (cos(rx) * result.y) - (sin(rx) * result.z);
-	result.z = (sin(rx) * vertex.y) + (cos(rx) * result.z);
-	result.x = (cos(ry) * result.x) + (sin(ry) * result.z);
+	float z = vertex.z * 0.1;
+	// result.y = (cos(rx) * result.y) - (sin(rx) * result.z);
+	// result.z = (sin(rx) * vertex.y) + (cos(rx) * result.z);
+	// result.x = (cos(ry) * result.x) + (sin(ry) * result.z);
 
 
-	// result.x = (cos(rx) * (vertex.x)) - (sin(rx) * (vertex.y));
-	// result.y = (sin(rx) * (vertex.x)) + (cos(rx) * (vertex.y));
-	// result.z = 1;
+	result.x = (cos(ry) * (vertex.x)) - (sin(ry) * (vertex.y));
+	result.y = (sin(ry) * (vertex.x)) + (cos(ry) * (vertex.y));
+	result.z = result.z;
+
+	result.x = (cos(rx) * (result.x)) + (sin(rx) * (z));
+	result.y = result.y;
+	result.z = (sin(rx) * (result.x)) + (cos(rx) * (z));
 
 	// axisx.y = (cos(rx) * axisx.y) - (sin(rx) * axisx.z);
 	// axisx.z = (sin(rx) * raxisx.y) + (cos(rx) * axisx.z);
