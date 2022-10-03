@@ -17,7 +17,6 @@ int	main(int argc, char **argv)
 	RenderContext_t *ctx;
 
 	ctx = initRenderContext();
-	ctx->mesh.scale = 50;
 
 	while (1)
 	{
@@ -28,6 +27,6 @@ int	main(int argc, char **argv)
 		DrawMesh(ctx);
 		SDL_RenderPresent(ctx->display->renderer);
 	}
-;
+
 	exit(0);
 }

@@ -14,31 +14,25 @@
 
 void HandleInput(RenderContext_t *ctx)
 {
-	SDLX_Input input;
+	SDLX_Input	input;
+	SDL_Event	event;
 
 	input = SDLX_InputGet();
 
-	SDL_Event event;
-
 	while (SDL_PollEvent(&event))
 	{
-		// SDL_Log("Wheel %d", event.wheel.type);
-		// SDL_Log("MOTIOn %d", event.motion);
-		if (event.type == SDL_QUIT)
-			exit(0);
-		if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+		if (event.type == SDL_QUIT || event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
 			exit(0);
 		if(event.type == SDL_MOUSEWHEEL)
 		{
 			ctx->mesh.scale += (event.wheel.y  * 5);
 		}
 	}
-	// ctx->mesh.rotation.y = 80;
-	// (input.mouse_buttons[SDL_BUTTON_MIDDLE]);
-	ctx->mesh.rotation.y -= (input.keyboard[KEY_LEFT] & 1) * 0.05;
-	ctx->mesh.rotation.y += (input.keyboard[KEY_RIGHT] & 1) * 0.05;
-	ctx->mesh.rotation.x += (input.keyboard[KEY_UP] & 1) * 0.05;
-	ctx->mesh.rotation.x -= (input.keyboard[KEY_DOWN] & 1) * 0.05;
+
+	ctx->mesh.rotation.y -= (input.keyboard[KEY_LEFT] 	& 1) * 0.05;
+	ctx->mesh.rotation.y += (input.keyboard[KEY_RIGHT]	& 1) * 0.05;
+	ctx->mesh.rotation.x += (input.keyboard[KEY_UP] 	& 1) * 0.05;
+	ctx->mesh.rotation.x -= (input.keyboard[KEY_DOWN] 	& 1) * 0.05;
 
 	ctx->mesh.scale += (input.keyboard[KEY_ZOOMU] & 1) * 0.01;
 	ctx->mesh.scale -= (input.keyboard[KEY_ZOOMD] & 1) * 0.01;
