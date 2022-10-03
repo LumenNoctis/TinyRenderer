@@ -18,8 +18,8 @@ char *parseVertices(Mesh_t *dest, char *data)
 		i++;
 		data = strtok(NULL, "\n");
 	}
-	dest->_center = dest->vertices[dest->vertexCount / 2].coordinates;
-	dest->center = &dest->vertices[dest->vertexCount / 2].coordinates;
+	dest->_center = (Vector3F_t){0,0,0};
+	dest->center = &dest->_center;
 
 	return data;
 }
