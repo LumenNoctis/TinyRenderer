@@ -25,7 +25,8 @@ SRCS_NAMES =								\
 	init				\
 	input_handler		\
 	main 				\
-	parser				\
+	parser_fdf			\
+	parser_obj			\
 	projection			\
 	utils				\
 
