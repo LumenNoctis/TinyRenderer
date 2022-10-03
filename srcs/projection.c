@@ -55,10 +55,6 @@ Vector3F_t		RotateVertex(Vector3F_t vertex, Vector3F_t center, Vector3F_t rotati
 	result.y = (sin(rx) * (px)) + (cos(rx) * (py));
 	result.z = result.z;
 
-	// result.x = result.x;
-	// result.y = (cos(rx) * (result.y)) + (sin(rx) * (result.z));
-	// result.z = (sin(rx) * (result.y)) + (cos(rx) * (result.z));
-
 	result.x = (cos(ry) * (result.x)) + (sin(ry) * (result.z));
 	result.y = result.y;
 	result.z = (-sin(ry) * (result.x)) + (cos(ry) * (result.z));
@@ -105,7 +101,6 @@ void		TransformMesh(Mesh_t *mesh)
 	i = 0;
 	for (i; i < mesh->vertexCount; i++)
 	{
-		// SDL_Log("Count %d",i);
 		coordinates = ScaleVertex(mesh->vertices[i].coordinates, mesh->scale);
 		coordinates = RotateVertex(coordinates, *(mesh->center), mesh->rotation);
 		mesh->vertices[i].screenCoord = CoordToScreen(coordinates, mesh->scale);
