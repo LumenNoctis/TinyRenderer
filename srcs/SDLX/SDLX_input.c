@@ -95,7 +95,7 @@ void SDLX_BuildKeyMapInput(void)
 
 	i = 0;
 	keyboard = SDL_GetKeyboardState(NULL);
-
+	SDL_PumpEvents();
 	memcpy(keyboard_buffer, _intern_input.keyboard, SDL_NUM_SCANCODES * sizeof(u_int8_t));
 	memset(_intern_input.keyboard, 0,  SDL_NUM_SCANCODES * sizeof(uint8_t));
 	while (i < keymap_size)

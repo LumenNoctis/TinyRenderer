@@ -1,6 +1,6 @@
 #include "renderer.h"
 
-void DrawVertices(char *pixels, char *z_buffer, Mesh_t mesh, SDLX_Display *display)
+void DrawVertices(MeshRender_t *render, Mesh_t mesh, int trace, SDLX_Display *display)
 {
 	Vector2_t screenCoord;
 	int pixelsBound;
@@ -14,14 +14,19 @@ void DrawVertices(char *pixels, char *z_buffer, Mesh_t mesh, SDLX_Display *displ
 		if (display->win_w * screenCoord.y + screenCoord.x < pixelsBound &&
 			display->win_w * screenCoord.y + screenCoord.x >= 0)
 		{
-			uint32_t *t = (uint32_t *)pixels;
-			t[display->win_w * screenCoord.y + screenCoord.x] = 0xFF0000FF;
+			// uint32_t *pixelUint = (uint32_t *)render->pixels;
+			uint32_t *traceUint = (uint32_t *)render->trace;
+
+			// pixelUint[display->win_w * screenCoord.y + screenCoord.x] = 0xFF0000FF;
+			// if(trace)
+				traceUint[display->win_w * screenCoord.y + screenCoord.x] = 0xFF0000FF;
+
 			// z_buffer[screenCoord.x * screenCoord.y] = mesh.vertices[i].coordinates.z;
 		}
 	}
 }
 
-void DrawEdges(char *pixels, char *z_buffer, Mesh_t mesh, SDLX_Display *display)
+void DrawEdges(MeshRender_t *render, Mesh_t mesh, int trace, SDLX_Display *display)
 {
 	Vector2F_t screenCoordA;
 	Vector2F_t screenCoordB;
@@ -42,17 +47,22 @@ void DrawEdges(char *pixels, char *z_buffer, Mesh_t mesh, SDLX_Display *display)
 void DrawMesh(RenderContext_t *ctx)
 {
 	Vertex_t toScreen;
-	SDL_Surface *surf;
-	SDL_Texture	*texture;
+	SDL_Texture	*pixeltexture;
+	SDL_Texture	*tracetexture;
 
 
+	// memset(ctx->render.pixels, 0x000000, ctx->display->win_h * ctx->display->win_w * PIXEL_CHANNELS * 2);
 
-	memset(ctx->pixels, 0x000000, ctx->display->win_h * ctx->display->win_w * PIXEL_CHANNELS * 2);
+	if (ctx->settings.trace)
+	{
+		DrawVertices(&(ctx->render), ctx->mesh, ctx->settings.trace, ctx->display);
+	}
+	DrawEdges	(&(ctx->render), ctx->mesh, ctx->settings.trace, ctx->display);
 
-	DrawVertices(ctx->pixels, NULL, ctx->mesh, ctx->display);
-	DrawEdges(ctx->pixels, ctx->z_buffer, ctx->mesh, ctx->display);
-
-	texture = SDL_CreateTextureFromSurface(ctx->display->renderer, ctx->surface);
-	SDL_RenderCopy(ctx->display->renderer, texture, NULL, NULL);
-	SDL_DestroyTexture(texture);
+	pixeltexture = SDL_CreateTextureFromSurface(ctx->display->renderer, ctx->render.pixelSurf);
+	tracetexture = SDL_CreateTextureFromSurface(ctx->display->renderer, ctx->render.traceSurf);
+	SDL_RenderCopy(ctx->display->renderer, pixeltexture, NULL, NULL);
+	SDL_RenderCopy(ctx->display->renderer, tracetexture, NULL, NULL);
+	SDL_DestroyTexture(pixeltexture);
+	SDL_DestroyTexture(tracetexture);
 }

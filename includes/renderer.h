@@ -21,8 +21,8 @@ void	TransformMesh(Mesh_t *mesh);
 void	HandleInput(RenderContext_t *ctx);
 int		count (char *str, char c);
 char	*OpenFile(char *filename, long *filesize);
-void	MapToMesh(Mesh_t *dest, char *filename);
-void 	ObjToMesh(Mesh_t *dest, char *filename);
+void	LoadFdFFile(Mesh_t *dest, char *filename);
+void 	LoadObjFile(Mesh_t *dest, char *filename);
 
 
 void printCoord3D(Vector3_t coord);

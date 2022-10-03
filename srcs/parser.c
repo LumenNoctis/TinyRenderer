@@ -20,7 +20,7 @@ int CountNumbers(char *str)
 	return count;
 }
 
-void MapToMesh(Mesh_t *dest, char *filename)
+void MapLoadFdFFileToMesh(Mesh_t *dest, char *filename)
 {
 	long filesize;
 	size_t width;
@@ -88,7 +88,7 @@ void MapToMesh(Mesh_t *dest, char *filename)
 	dest->center = &dest->vertices[(height * width)/2].coordinates;
 }
 
-void ObjToMesh(Mesh_t *dest, char *filename)
+void LoadObjFile(Mesh_t *dest, char *filename)
 {
 	long filesize;
 	int	 lineCount;

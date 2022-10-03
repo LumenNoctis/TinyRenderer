@@ -13,11 +13,13 @@ enum {
 	KEY_LEFT,
 	KEY_RIGHT,
 	KEY_UP,
-	KEY_DL,
-	KEY_DR,
 	KEY_DOWN,
-	KEY_ZOOM,
-	KEY_MODE
+	KEY_RESET,
+	KEY_MODE,
+	KEY_TRACE,
+	KEY_SHIFT,
+	KEY_ZOOMU,
+	KEY_ZOOMD
 };
 
 typedef struct Vector2
@@ -83,22 +85,28 @@ typedef struct		s_camera
 typedef	struct		s_settings
 {
 	int				trace;
+	int				mode;
 }					Settings_t;
+
+typedef struct		s_MeshRender
+{
+	char 			*pixels;
+	char 			*trace;
+	char			*z_buffer;
+
+	SDL_Surface		*pixelSurf;
+	SDL_Surface		*traceSurf;
+}					MeshRender_t;
 
 typedef struct		s_renderContext
 {
-	int				i;
-	int				mode;
-	int				a_z;
-	int				a_x;
-
-	float			scale;
-
 	Mesh_t			mesh;
+	Settings_t		settings;
+	MeshRender_t	render;
+
 	SDLX_Display	*display;
-	SDL_Surface		*surface;
-	char 			*pixels;
-	char			*z_buffer;
+	SDL_Texture		*menu;
+	int				displayMenu;
 }					RenderContext_t;
 
 #endif

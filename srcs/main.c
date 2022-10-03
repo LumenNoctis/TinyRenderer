@@ -17,15 +17,12 @@ int	main(int argc, char **argv)
 	RenderContext_t *ctx;
 
 	ctx = initRenderContext();
-	// MapToMesh(&ctx->mesh, "maps/42.fdf");
-	ObjToMesh(&ctx->mesh, "assets/wireframe.obj");
-	SDL_Log("Init");
 	ctx->mesh.scale = 50;
+
 	while (1)
 	{
 		SDLX_RenderReset(ctx->display);
 		SDLX_InputUpdate();
-		SDLX_InputLoop();
 		HandleInput(ctx);
 		TransformMesh(&(ctx->mesh));
 		DrawMesh(ctx);
