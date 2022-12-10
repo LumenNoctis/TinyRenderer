@@ -48,7 +48,7 @@ void		SDLX_SpriteCreate(SDLX_Sprite *dest, uint32_t layer, SDL_Texture *texture)
 
 void		SDLX_InputUpdate(void);
 SDLX_Input 	SDLX_InputGet(void);
-int 		SDLX_GetKeyState(int key);
+int SDLX_GetKeyState(int key);
 
 void SDLX_InputMap(int keyType, int fromKey, int toKey);
 
@@ -62,11 +62,21 @@ SDLX_Time 	SDLX_TimeGet(void);
 int			SDLX_TimedLoop(int (*game_loop)(void *), void *args);
 int			SDLX_PointInCircle(SDL_Point point, SDLX_Circle circle);
 
+
+// buttons
+void 		SDLX_ButtonUpdate();
+void 		SDLX_ButtonSet_Keys(int left, int right, int up, int down, int select);
+void 		SDLX_ButtonCreate (SDLX_Button *dest, SDL_Rect *boundingBox);
+void		SDLX_ButtonSet_Neighbours(SDLX_Button *dest, SDLX_Button *left, SDLX_Button *right, SDLX_Button *up, SDLX_Button *down);
+
 //Maybe put dbeug in its own header to be included separately
 /**
  * SDLX debug functions
  *
  */
 void 		SDLX_SpritePrint(SDLX_Sprite *sprite);
+
+void SDLX_ContainerElemCreate(SDLX_ContainerElem *dest, SDL_Rect *boundingBox, int margin, int widthType, int heightType);
+void SDLX_ContainerUpdate(SDLX_RectContainer *container, SDLX_RectContainer *parent);
 
 #endif

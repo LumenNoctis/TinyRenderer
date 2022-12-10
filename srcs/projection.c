@@ -33,9 +33,9 @@ Vector3F_t		RotateVertex(Vector3F_t vertex, Vector3F_t center, Vector3F_t rotati
 	double px;
 	double py;
 	double pz;
-	float rx;
-	float ry;
-	float rz;
+	double rx;
+	double ry;
+	double rz;
 
 	px = vertex.x - center.x;
 	py = vertex.y - center.y;
@@ -49,18 +49,11 @@ Vector3F_t		RotateVertex(Vector3F_t vertex, Vector3F_t center, Vector3F_t rotati
 	result.y = vertex.y;
 	result.z = vertex.z;
 
-	float z = vertex.z;
-
 	result.x = (cos(rx) * (px)) - (sin(rx) * (py));
+
+	result.x = (cos(ry) * result.x) + (sin(ry) * (result.z));
 	result.y = (sin(rx) * (px)) + (cos(rx) * (py));
-	result.z = result.z;
-
-	result.x = (cos(ry) * (result.x)) + (sin(ry) * (result.z));
-	result.y = result.y;
-	result.z = (-sin(ry) * (result.x)) + (cos(ry) * (result.z));
-
-
-
+	result.z = (-cos(ry) * result.y) + (sin(ry) * (result.z));
 
 	return  result;
 }

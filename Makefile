@@ -13,16 +13,18 @@ SRCS_DIR = srcs/
 BIN_DIR = bin/
 
 SDLX_NAMES = 			\
+	SDLX_buttons		\
+	SDLX_containers		\
 	SDLX_init			\
 	SDLX_input			\
 	SDLX_render			\
-	SDLX_unitTests		\
 	SDLX_utils			\
 
 SRCS_NAMES =								\
 	$(addprefix $(SDLX_DIR), $(SDLX_NAMES))	\
 	draw				\
-	init				\
+	init_context		\
+	init_menu			\
 	input_handler		\
 	main 				\
 	parser_fdf			\

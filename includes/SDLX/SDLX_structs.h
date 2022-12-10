@@ -13,7 +13,7 @@
 
 #include "SDL2/SDL.h"
 
-typedef struct SDLX_Display
+ typedef struct SDLX_Display
 {
     SDL_Window      *window;
     SDL_Renderer    *renderer;
@@ -78,6 +78,46 @@ typedef struct SDLX_Time
     Uint32     last_frame;
     uint32_t    frame_count;
 }   SDLX_Time;
+
+typedef struct SDLX_Button
+{
+	SDL_Rect _boundingBox;
+	SDL_Rect *boundingBox;
+
+	int state;
+	int triggered;
+	int enabled;
+
+	struct SDLX_Button *neighbours[4];
+}	SDLX_Button;
+
+typedef struct SDLX_ContainerElem
+{
+	SDL_Rect	*boundingBox;
+	SDL_Rect	_boundingBox;
+
+	SDL_Rect	_origin;
+
+	int			widthTYpe;
+	int			heightTYpe;
+
+	int			margin;
+}				SDLX_ContainerElem;
+
+typedef struct SDLX_RectContainer
+{
+	SDLX_ContainerElem self;
+	SDLX_ContainerElem *elems;
+
+	struct SDLX_RectContainer *containers;
+
+	int elemCount;
+	int containerCount;
+	int alignment;
+	int alignDirection;// H / V
+	int innerWidth;
+	int innerHeight;
+}				SDLX_RectContainer;
 
 typedef struct SDLX_Circle
 {
